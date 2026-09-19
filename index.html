@@ -9,61 +9,61 @@
 <body class="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-black">
 
     <!-- ヘッダー -->
-    <header class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-950 border-b border-amber-500/40 shadow-xl p-3 sm:p-4 sticky top-0 z-50">
+    <header class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-950 border-b border-amber-500/40 shadow-xl px-3 py-2 sm:p-4 sticky top-0 z-50">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="text-base sm:text-xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)]">
+            <h1 class="text-sm sm:text-xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)]">
                 YNTN TOURS 3-A.B
             </h1>
             <div class="flex items-center gap-2">
-                <button onclick="loadData()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 px-2.5 py-1.5 rounded-lg shadow transition flex items-center gap-1">
+                <button onclick="loadData()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 px-2 py-1 rounded-lg shadow transition flex items-center gap-1">
                     <span>🔄</span> 更新
                 </button>
                 <div id="admin-mode-trigger" class="hidden">
-                    <button onclick="switchTab('admin')" id="btn-admin" class="px-2.5 py-1 sm:px-3 sm:py-1.5 text-xs sm:text-sm bg-slate-800 text-amber-300 border border-amber-500/30 font-semibold rounded-lg shadow transition">運営モード</button>
+                    <button onclick="switchTab('admin')" id="btn-admin" class="px-2.5 py-1 text-xs sm:text-sm bg-slate-800 text-amber-300 border border-amber-500/30 font-semibold rounded-lg shadow transition">運営モード</button>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- メインコンテンツ -->
-    <main class="max-w-4xl mx-auto flex-1 w-full p-3 sm:p-4 space-y-4 sm:space-y-6">
+    <main class="max-w-4xl mx-auto flex-1 w-full p-2.5 sm:p-4 space-y-3 sm:space-y-6">
 
         <!-- ================= お客さん画面 ================= -->
-        <section id="view-customer" class="space-y-4 sm:space-y-6">
+        <section id="view-customer" class="space-y-3 sm:space-y-6">
             <!-- 現在呼び出し中 -->
-            <div class="bg-gradient-to-br from-blue-950 via-slate-900 to-[#070913] border-2 border-amber-500/50 rounded-2xl p-5 sm:p-6 text-center shadow-[0_0_30px_rgba(30,58,138,0.4)] relative overflow-hidden">
+            <div class="bg-gradient-to-br from-blue-950 via-slate-900 to-[#070913] border-2 border-amber-500/50 rounded-2xl p-4 sm:p-6 text-center shadow-[0_0_30px_rgba(30,58,138,0.4)] relative overflow-hidden">
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
-                <h2 class="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] mb-2 flex items-center justify-center gap-2">
+                <h2 class="text-amber-400 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-1 sm:mb-2 flex items-center justify-center gap-2">
                     <span>🚀</span> ただいまのご案内番号 <span>🚀</span>
                 </h2>
-                <div id="current-display" class="text-5xl sm:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-amber-200 my-2 sm:my-3 drop-shadow-md">----</div>
-                <p id="current-msg" class="text-blue-200/80 text-xs sm:text-sm">まもなくご搭乗です。フライトゲートへお進みください！</p>
+                <div id="current-display" class="text-4xl sm:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-amber-200 my-1 sm:my-3 drop-shadow-md">----</div>
+                <p id="current-msg" class="text-blue-200/80 text-[11px] sm:text-sm">まもなくご搭乗です。フライトゲートへお進みください！</p>
             </div>
 
             <!-- キャンセル・遅刻の連絡フォーム -->
-            <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-4 sm:p-5 shadow-lg relative space-y-4">
-                <h3 class="text-amber-400 text-sm sm:text-base font-bold flex items-center gap-2">
+            <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-3 sm:p-5 shadow-lg relative space-y-2.5 sm:space-y-4">
+                <h3 class="text-amber-400 text-xs sm:text-base font-bold flex items-center gap-1.5">
                     <span>⚠️</span> フライトに行けない・遅れる場合のご連絡
                 </h3>
-                <p class="text-xs sm:text-sm text-slate-300">予約した時間に行けなくなった場合は、自分の番号を直接入力してキャンセルボタンを押してください。</p>
+                <p class="text-[11px] sm:text-sm text-slate-300">予約した時間に行けなくなった場合は、自分の番号を直接入力してボタンを押してください。</p>
                 
-                <div class="space-y-3">
+                <div class="space-y-2 sm:space-y-3">
                     <div>
-                        <label class="block text-xs text-slate-400 mb-1">あなたの搭乗番号</label>
-                        <input type="text" id="cancel-input" placeholder="例: 15" class="bg-slate-950 border border-amber-500/40 rounded-lg px-3 py-2 text-white text-sm sm:text-base w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <label class="block text-[10px] sm:text-xs text-slate-400 mb-1">あなたの搭乗番号</label>
+                        <input type="text" id="cancel-input" placeholder="例: 15" class="bg-slate-950 border border-amber-500/40 rounded-lg px-3 py-1.5 sm:py-2 text-white text-xs sm:text-base w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-amber-500">
                     </div>
 
                     <div>
-                        <label class="block text-xs text-slate-400 mb-1.5">状況をお選びください</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <button onclick="submitStatus('遅れます(10分以内)', this)" class="status-btn bg-slate-950 hover:bg-blue-950 border border-blue-500/40 text-blue-200 text-xs sm:text-sm font-bold p-2.5 rounded-lg transition text-center">
-                                ⏱️ 遅れます<br><span class="text-[10px] text-slate-400 font-normal">(10分以内)</span>
+                        <label class="block text-[10px] sm:text-xs text-slate-400 mb-1">状況をお選びください</label>
+                        <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
+                            <button onclick="submitStatus('遅れます(10分以内)', this)" class="status-btn bg-slate-950 hover:bg-blue-950 border border-blue-500/40 text-blue-200 text-[11px] sm:text-sm font-bold p-2 sm:p-2.5 rounded-lg transition text-center">
+                                ⏱️ 遅れます<br><span class="text-[9px] sm:text-[10px] text-slate-400 font-normal">(10分以内)</span>
                             </button>
-                            <button onclick="submitStatus('かなり遅れます(30分以内)', this)" class="status-btn bg-slate-950 hover:bg-amber-950/50 border border-amber-500/40 text-amber-200 text-xs sm:text-sm font-bold p-2.5 rounded-lg transition text-center">
-                                ⏳ かなり遅れます<br><span class="text-[10px] text-slate-400 font-normal">(30分以内)</span>
+                            <button onclick="submitStatus('かなり遅れます(30分以内)', this)" class="status-btn bg-slate-950 hover:bg-amber-950/50 border border-amber-500/40 text-amber-200 text-[11px] sm:text-sm font-bold p-2 sm:p-2.5 rounded-lg transition text-center">
+                                ⏳ かなり遅れる<br><span class="text-[9px] sm:text-[10px] text-slate-400 font-normal">(30分以内)</span>
                             </button>
-                            <button onclick="submitStatus('キャンセル(30分以上)', this)" class="status-btn bg-slate-950 hover:bg-rose-950/50 border border-rose-500/40 text-rose-200 text-xs sm:text-sm font-bold p-2.5 rounded-lg transition text-center">
-                                ❌ キャンセル<br><span class="text-[10px] text-slate-400 font-normal">(30分以上)</span>
+                            <button onclick="submitStatus('キャンセル(30分以上)', this)" class="status-btn bg-slate-950 hover:bg-rose-950/50 border border-rose-500/40 text-rose-200 text-[11px] sm:text-sm font-bold p-2 sm:p-2.5 rounded-lg transition text-center">
+                                ❌ キャンセル<br><span class="text-[9px] sm:text-[10px] text-slate-400 font-normal">(30分以上)</span>
                             </button>
                         </div>
                     </div>
@@ -71,23 +71,23 @@
             </div>
 
             <!-- 現在の状況一覧 -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-slate-900/80 border border-blue-900/50 rounded-2xl p-4 sm:p-5 shadow">
-                    <h3 class="text-blue-300 text-sm sm:text-base font-bold mb-3 flex items-center justify-between">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                <div class="bg-slate-900/80 border border-blue-900/50 rounded-2xl p-3 sm:p-5 shadow">
+                    <h3 class="text-blue-300 text-xs sm:text-base font-bold mb-2 sm:mb-3 flex items-center justify-between">
                         <span class="flex items-center gap-1.5">🌠 受付待ち・スタンバイ</span>
-                        <span id="waiting-count" class="text-xs bg-blue-950 border border-blue-800 px-2.5 py-0.5 rounded-full text-blue-200">0件</span>
+                        <span id="waiting-count" class="text-[10px] sm:text-xs bg-blue-950 border border-blue-800 px-2 py-0.5 rounded-full text-blue-200">0件</span>
                     </h3>
-                    <div id="waiting-list" class="flex flex-wrap gap-1.5 sm:gap-2 max-h-48 overflow-y-auto p-1">
+                    <div id="waiting-list" class="flex flex-wrap gap-1.5 max-h-36 sm:max-h-48 overflow-y-auto p-1">
                         <!-- 動的に生成 -->
                     </div>
                 </div>
 
-                <div class="bg-slate-900/80 border border-amber-900/50 rounded-2xl p-4 sm:p-5 shadow">
-                    <h3 class="text-amber-500/90 text-sm sm:text-base font-bold mb-3 flex items-center justify-between">
+                <div class="bg-slate-900/80 border border-amber-900/50 rounded-2xl p-3 sm:p-5 shadow">
+                    <h3 class="text-amber-500/90 text-xs sm:text-base font-bold mb-2 sm:mb-3 flex items-center justify-between">
                         <span class="flex items-center gap-1.5">🪐 キャンセル・遅刻連絡一覧</span>
-                        <span id="canceled-count" class="text-xs bg-amber-950/60 border border-amber-900/50 px-2.5 py-0.5 rounded-full text-amber-300">0件</span>
+                        <span id="canceled-count" class="text-[10px] sm:text-xs bg-amber-950/60 border border-amber-900/50 px-2 py-0.5 rounded-full text-amber-300">0件</span>
                     </h3>
-                    <div id="canceled-list" class="flex flex-col gap-2 max-h-48 overflow-y-auto p-1">
+                    <div id="canceled-list" class="flex flex-col gap-1.5 max-h-36 sm:max-h-48 overflow-y-auto p-1">
                         <!-- 動的に生成 -->
                     </div>
                 </div>
@@ -147,7 +147,7 @@
 
     </main>
 
-    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-900 mt-auto">
+    <footer class="text-center py-3 text-xs text-slate-500 border-t border-slate-900 mt-auto">
         YNTN TOURS 3-A.B Flight Control System
     </footer>
 
@@ -230,18 +230,18 @@
             } else {
                 appData.canceled.forEach(item => {
                     const badge = document.createElement('div');
-                    badge.className = "bg-slate-950/80 text-slate-200 px-3 py-2 rounded-lg text-xs sm:text-sm border border-slate-800 shadow-sm flex items-center justify-between gap-2";
+                    badge.className = "bg-slate-950/80 text-slate-200 px-2.5 py-1.5 rounded-lg text-xs border border-slate-800 shadow-sm flex items-center justify-between gap-2";
                     
                     let statusColor = "text-amber-300 bg-amber-950/50 border-amber-800/50";
                     if (item.status.includes('キャンセル')) statusColor = "text-rose-300 bg-rose-950/50 border-rose-800/50";
                     if (item.status.includes('10分以内')) statusColor = "text-blue-300 bg-blue-950/50 border-blue-800/50";
 
                     badge.innerHTML = `
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-white text-base">No. ${item.num}</span>
-                            <span class="text-xs px-2 py-0.5 rounded border ${statusColor}">${item.status}</span>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-bold text-white">No. ${item.num}</span>
+                            <span class="text-[10px] px-1.5 py-0.5 rounded border ${statusColor}">${item.status}</span>
                         </div>
-                        <span class="text-[11px] text-slate-400 font-mono">🕒 ${item.time || '--:--'}</span>
+                        <span class="text-[10px] text-slate-400 font-mono">🕒 ${item.time || '--:--'}</span>
                     `;
                     canceledListEl.appendChild(badge);
                 });
