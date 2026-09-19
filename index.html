@@ -14,7 +14,6 @@
             <h1 class="text-base sm:text-xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(245,158,11,0.3)]">
                 YNTN TOURS 3-A.B
             </h1>
-            <!-- スタッフ用URL(?admin=1)のときだけ運営モードボタンを表示 -->
             <div class="flex items-center gap-2">
                 <button onclick="loadData()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 px-2.5 py-1.5 rounded-lg shadow transition flex items-center gap-1">
                     <span>🔄</span> 更新
@@ -41,15 +40,33 @@
                 <p id="current-msg" class="text-blue-200/80 text-xs sm:text-sm">まもなくご搭乗です。フライトゲートへお進みください！</p>
             </div>
 
-            <!-- キャンセル・行けなくなったとき（直接入力版） -->
-            <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-4 sm:p-5 shadow-lg relative">
-                <h3 class="text-amber-400 text-sm sm:text-base font-bold mb-2 flex items-center gap-2">
-                    <span>⚠️</span> フライト（時間）に行けなくなった方へ
+            <!-- キャンセル・遅刻の連絡フォーム -->
+            <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-4 sm:p-5 shadow-lg relative space-y-4">
+                <h3 class="text-amber-400 text-sm sm:text-base font-bold flex items-center gap-2">
+                    <span>⚠️</span> フライトに行けない・遅れる場合のご連絡
                 </h3>
-                <p class="text-xs sm:text-sm text-slate-300 mb-3">予約した時間に行けなくなった場合は、自分の番号を直接入力してキャンセルボタンを押してください。次の宇宙飛行士に枠が譲られます。</p>
-                <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="text" id="cancel-input" placeholder="例: 15" class="bg-slate-950 border border-amber-500/40 rounded-lg px-3 py-2 text-white text-sm sm:text-base flex-1 focus:outline-none focus:ring-2 focus:ring-amber-500">
-                    <button onclick="requestCancel()" class="bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-extrabold px-4 py-2.5 sm:py-2 rounded-lg shadow-md transition text-sm sm:text-base">キャンセルする</button>
+                <p class="text-xs sm:text-sm text-slate-300">番号を入力し、下の状況を選んで送信してください。</p>
+                
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">あなたの搭乗番号</label>
+                        <input type="text" id="cancel-input" placeholder="例: 15" class="bg-slate-950 border border-amber-500/40 rounded-lg px-3 py-2 text-white text-sm sm:text-base w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1.5">状況をお選びください</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <button onclick="submitStatus('遅れます(10分以内)', this)" class="status-btn bg-slate-950 hover:bg-blue-950 border border-blue-500/40 text-blue-200 text-xs sm:text-sm font-bold p-2.5 rounded-lg transition text-center">
+                                ⏱️ 遅れます<br><span class="text-[10px] text-slate-400 font-normal">(10分以内)</span>
+                            </button>
+                            <button onclick="submitStatus('かなり遅れます(30分以内)', this)" class="status-btn bg-slate-950 hover:bg-amber-950/50 border border-amber-500/40 text-amber-200 text-xs sm:text-sm font-bold p-2.5 rounded-lg transition text-center">
+                                ⏳ かなり遅れます<br><span class="text-[10px] text-slate-400 font-normal">(30分以内)</span>
+                            </button>
+                            <button onclick="submitStatus('キャンセル(30分以上)', this)" class="status-btn bg-slate-950 hover:bg-rose-950/50 border border-rose-500/40 text-rose-200 text-xs sm:text-sm font-bold p-2.5 rounded-lg transition text-center">
+                                ❌ キャンセル<br><span class="text-[10px] text-slate-400 font-normal">(30分以上)</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -67,10 +84,10 @@
 
                 <div class="bg-slate-900/80 border border-amber-900/50 rounded-2xl p-4 sm:p-5 shadow">
                     <h3 class="text-amber-500/90 text-sm sm:text-base font-bold mb-3 flex items-center justify-between">
-                        <span class="flex items-center gap-1.5">🪐 キャンセル済み番号</span>
+                        <span class="flex items-center gap-1.5">🪐 キャンセル・遅刻連絡一覧</span>
                         <span id="canceled-count" class="text-xs bg-amber-950/60 border border-amber-900/50 px-2.5 py-0.5 rounded-full text-amber-300">0件</span>
                     </h3>
-                    <div id="canceled-list" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
+                    <div id="canceled-list" class="flex flex-col gap-2 max-h-48 overflow-y-auto p-1">
                         <!-- 動的に生成 -->
                     </div>
                 </div>
@@ -120,7 +137,7 @@
 
                 <!-- 手動ステータス管理リスト -->
                 <div class="space-y-2">
-                    <label class="text-xs sm:text-sm font-semibold text-blue-200">全番号ステータス管理（キャンセル時刻も記録されます）</label>
+                    <label class="text-xs sm:text-sm font-semibold text-blue-200">全番号ステータス管理</label>
                     <div id="admin-number-table" class="bg-slate-950 border border-slate-800 rounded-xl p-3 max-h-60 overflow-y-auto space-y-2">
                         <!-- 動的生成 -->
                     </div>
@@ -144,7 +161,7 @@
         let appData = {
             current: '未設定',
             waiting: [],
-            canceled: [] // 形式: [{num: '15', time: '14:32'}]
+            canceled: [] // 形式: [{num: '15', status: 'キャンセル(30分以上)', time: '14:32'}]
         };
 
         function getCurrentTimeString() {
@@ -158,10 +175,13 @@
             const saved = localStorage.getItem('yntn_tours_data');
             if (saved) {
                 appData = JSON.parse(saved);
-                // データの形式をチェックし、古い形式（文字列のまま）なら現在の時間を補う
+                // 旧形式からの移行対応
                 if (appData.canceled.length > 0 && typeof appData.canceled[0] === 'string') {
                     const currentTime = getCurrentTimeString();
-                    appData.canceled = appData.canceled.map(num => ({ num: num, time: currentTime }));
+                    appData.canceled = appData.canceled.map(num => ({ num: num, status: 'キャンセル(30分以上)', time: currentTime }));
+                    saveData();
+                } else if (appData.canceled.length > 0 && !appData.canceled[0].status) {
+                    appData.canceled = appData.canceled.map(item => ({ num: item.num, status: 'キャンセル(30分以上)', time: item.time || '--:--' }));
                     saveData();
                 }
             }
@@ -207,12 +227,23 @@
             const canceledListEl = document.getElementById('canceled-list');
             canceledListEl.innerHTML = '';
             if (appData.canceled.length === 0) {
-                canceledListEl.innerHTML = '<span class="text-xs text-slate-500">キャンセルはありません</span>';
+                canceledListEl.innerHTML = '<span class="text-xs text-slate-500">連絡はありません</span>';
             } else {
                 appData.canceled.forEach(item => {
                     const badge = document.createElement('div');
-                    badge.className = "bg-amber-950/60 text-amber-300 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold border border-amber-900/60 shadow-sm flex items-center justify-between gap-3";
-                    badge.innerHTML = `<span>No. ${item.num}</span><span class="text-xs text-amber-200 font-mono bg-amber-900/50 px-2 py-0.5 rounded">🕒 ${item.time || '--:--'}</span>`;
+                    badge.className = "bg-slate-950/80 text-slate-200 px-3 py-2 rounded-lg text-xs sm:text-sm border border-slate-800 shadow-sm flex items-center justify-between gap-2";
+                    
+                    let statusColor = "text-amber-300 bg-amber-950/50 border-amber-800/50";
+                    if (item.status.includes('キャンセル')) statusColor = "text-rose-300 bg-rose-950/50 border-rose-800/50";
+                    if (item.status.includes('10分以内')) statusColor = "text-blue-300 bg-blue-950/50 border-blue-800/50";
+
+                    badge.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-white text-base">No. ${item.num}</span>
+                            <span class="text-xs px-2 py-0.5 rounded border ${statusColor}">${item.status}</span>
+                        </div>
+                        <span class="text-[11px] text-slate-400 font-mono">🕒 ${item.time || '--:--'}</span>
+                    `;
                     canceledListEl.appendChild(badge);
                 });
             }
@@ -233,20 +264,20 @@
                     allNums.sort((a, b) => Number(a) - Number(b)).forEach(num => {
                         const isCanceled = canceledNums.includes(num);
                         const canceledItem = appData.canceled.find(item => item.num === num);
-                        const timeStr = isCanceled && canceledItem ? `キャンセル時刻: ${canceledItem.time || '--:--'}` : '';
+                        const statusStr = isCanceled && canceledItem ? canceledItem.status : '受付待ち';
+                        const timeStr = isCanceled && canceledItem ? `(${canceledItem.time})` : '';
 
                         const row = document.createElement('div');
                         row.className = "flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-sm gap-2";
                         row.innerHTML = `
                             <div>
                                 <span class="font-bold text-white">${num}番</span>
-                                <span class="text-xs text-amber-400 ml-2 font-mono">${timeStr}</span>
+                                <span class="text-xs text-amber-400 ml-2">${statusStr} ${timeStr}</span>
                             </div>
                             <div class="flex items-center gap-1.5 w-full sm:w-auto justify-end">
                                 <span class="text-xs px-2 py-1 rounded ${isCanceled ? 'bg-amber-950 text-amber-300 border border-amber-800/50' : 'bg-blue-950 text-blue-300 border border-blue-800/50'}">
-                                    ${isCanceled ? 'キャンセル済み' : '受付待ち'}
-                                }</span>
-                                <button onclick="toggleStatus('${num}')" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded text-slate-300 border border-slate-700">切替</button>
+                                    ${isCanceled ? '連絡済み' : '受付待ち'}
+                                </span>
                                 <button onclick="removeNumber('${num}')" class="text-xs bg-rose-950 hover:bg-rose-900 px-2.5 py-1 rounded text-rose-300 border border-rose-900/50">消す</button>
                             </div>
                         `;
@@ -256,12 +287,13 @@
             }
         }
 
-        function requestCancel() {
+        function submitStatus(statusType, btnEl) {
             loadData();
             const input = document.getElementById('cancel-input');
             const target = input.value.trim();
+            
             if (!target) {
-                alert('キャンセルする番号を入力してください。（例: 15）');
+                alert('あなたの番号を入力してください。（例: 15）');
                 return;
             }
 
@@ -270,18 +302,18 @@
                 return;
             }
 
-            if (confirm(`${target}番をキャンセル扱いにしますか？`)) {
+            if (confirm(`${target}番の状況を「${statusType}」として送信しますか？`)) {
                 const timeString = getCurrentTimeString();
 
                 appData.waiting = appData.waiting.filter(n => n !== target);
                 
-                if (!appData.canceled.some(item => item.num === target)) {
-                    appData.canceled.push({ num: target, time: timeString });
-                }
+                // すでにリストにあれば更新、なければ追加
+                appData.canceled = appData.canceled.filter(item => item.num !== target);
+                appData.canceled.push({ num: target, status: statusType, time: timeString });
                 
                 input.value = '';
                 saveData();
-                alert(`${target}番のキャンセルを受け付けました（${timeString}）。ご協力ありがとうございます！`);
+                alert(`${target}番の連絡を受け付けました（${timeString}）。ご協力ありがとうございます！`);
             }
         }
 
@@ -323,19 +355,6 @@
                 }
             });
             input.value = '';
-            saveData();
-        }
-
-        function toggleStatus(num) {
-            loadData();
-            if (appData.waiting.includes(num)) {
-                appData.waiting = appData.waiting.filter(n => n !== num);
-                const timeString = getCurrentTimeString();
-                appData.canceled.push({ num: num, time: timeString });
-            } else {
-                appData.canceled = appData.canceled.filter(item => item.num !== num);
-                appData.waiting.push(num);
-            }
             saveData();
         }
 
